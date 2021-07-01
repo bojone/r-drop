@@ -91,17 +91,18 @@ model = keras.models.Model(bert.model.input, output)
 model.summary()
 
 
-def crossentropy(y_true, y_pred):
+def crossentropy_with_rdrop(y_true, y_pred, alpha=4):
+    """配合R-Drop的交叉熵损失
+    """
     y_true = K.reshape(y_true, K.shape(y_pred)[:-1])
     y_true = K.cast(y_true, 'int32')
-    y_true = K.one_hot(y_true, K.shape(y_pred)[-1])
-    loss1 = K.mean(kld(y_true, y_pred))
+    loss1 = K.mean(K.sparse_categorical_crossentropy(y_true, y_pred))
     loss2 = kld(y_pred[::2], y_pred[1::2]) + kld(y_pred[1::2], y_pred[::2])
-    return loss1 + K.mean(loss2)
+    return loss1 + K.mean(loss2) / 4 * alpha
 
 
 model.compile(
-    loss=crossentropy,
+    loss=crossentropy_with_rdrop,
     optimizer=Adam(2e-5),
     metrics=['sparse_categorical_accuracy'],
 )

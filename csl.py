@@ -22,7 +22,7 @@ from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
 # 基本参数
 maxlen = 256
 batch_size = 16
-epochs = 200
+epochs = 50  # 训练更多的epoch还能进一步有提升
 
 # bert配置
 config_path = '/root/kg/bert/chinese_wwm_L-12_H-768_A-12/bert_config.json'

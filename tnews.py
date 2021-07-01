@@ -93,6 +93,8 @@ model.summary()
 
 
 def crossentropy_with_rdrop(y_true, y_pred, alpha=4):
+    """配合R-Drop的交叉熵损失
+    """
     y_true = K.reshape(y_true, K.shape(y_pred)[:-1])
     y_true = K.cast(y_true, 'int32')
     loss1 = K.mean(K.sparse_categorical_crossentropy(y_true, y_pred))

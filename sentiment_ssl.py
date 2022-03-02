@@ -6,7 +6,7 @@
 
 import json
 import numpy as np
-from bert4keras.backend import keras, search_layer, K
+from bert4keras.backend import keras, K
 from bert4keras.tokenizers import Tokenizer
 from bert4keras.models import build_transformer_model
 from bert4keras.optimizers import Adam
